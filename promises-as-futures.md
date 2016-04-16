@@ -36,7 +36,7 @@ var R = require('ramda');
 #### Promise
 
 ```js
-// Function that makes an async request and returns a Promise
+// Read the given directory and return a Promise.
 function readdir(path) {
     return new Promise(function(resolve, reject) {
         fs.readdir(path, function(err, files) {
@@ -49,6 +49,7 @@ function readdir(path) {
     });
 }
 
+// Read the given file and return a Promise.
 function readfile(path) {
     return new Promise(function(resolve, reject) {
         fs.readFile(path, 'utf8', function(err, files) {
@@ -74,7 +75,7 @@ Promise.reject(value);
 #### Future
 
 ```js
-// Function that returns a Future that can be forked to make an async request
+// Return a future that will read the given directory when forked.
 function readdir(path) {
     // NOTE: reject/resolve order is flipped!
     return new Future(function(reject, resolve) {
@@ -88,6 +89,7 @@ function readdir(path) {
     });
 }
 
+// Return a future that will read the given file when forked.
 function readfile(path) {
     // NOTE: reject/resolve order is flipped!
     return new Future(function(reject, resolve) {
@@ -110,6 +112,10 @@ Future.of(value);
 // Create a rejected Future:
 Future.rejected(value);
 ```
+
+Key points:
+
+- very similar to the `Promise` API, but with `resolve`/`reject` flipped
 
 ## Operation Chaining
 
