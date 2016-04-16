@@ -16,7 +16,6 @@ Futures.
  * [Operation Chaining](#operation-chaining)
  * [Parallel Execution](#parallel-execution)
  * [Resources](#resources)
- * [Related Node Modules](#related-node-modules)
 
 ## Getting Started
 
@@ -189,10 +188,12 @@ Key points:
 
 ## Resources
 
+### Information
+
 - [Monad a day 2: Future](https://vimeo.com/106008027)
 - [Mostly Adequate Guide, Ch. 8.6: Asynchronous Tasks](https://drboolean.gitbooks.io/mostly-adequate-guide/content/ch8.html)
 
-## Related Node Modules
+### Node Modules
 
 - [data.task](https://www.npmjs.com/package/data.task)
 - [ramda-fantasy](https://www.npmjs.com/package/ramda-fantasy)
