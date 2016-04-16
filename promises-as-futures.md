@@ -9,6 +9,14 @@ toward the edges of the given application. Below we'll look at some typical
 Promise-based solutions to async, paired with reimplementations that use
 Futures.
 
+## Contents
+
+ * [Getting Started](#getting-started)
+ * [Construction](#construction)
+ * [Operation Chaining](#operation-chaining)
+ * [Parallel Execution](#parallel-execution)
+ * [Resources](#resources)
+
 ## Getting Started
 
 Examples assume Node.js 4+.
