@@ -153,7 +153,9 @@ readFirstJsFile('.').fork(console.warn, console.log);
 Key points:
 
 - `map` to run functions over `Future` values
-- `chain` when working with Futures within Futures (`chain` is `map` + "flatten")
+- `chain` when working with Futures within Futures to avoid nesting
+  - `chain` is `map` + "flatten"
+  - `Future(Future(value))` becomes `Future(value)`
 
 ## Parallel Execution
 
