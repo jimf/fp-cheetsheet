@@ -178,6 +178,13 @@ const readCurrentAndParentDirs = () =>
 
 // Read current and parent directories and log once both requests are complete:
 readCurrentAndParentDirs().fork(console.warn, console.log);
+
+// Alternative method:
+const readCurrentAndParentDirs2 = () =>
+    R.traverse(Future.of, readdir, ['.', '..']);
+
+// Return a list of Future results:
+readCurrentAndParentDirs2().fork(console.warn, console.log);
 ```
 
 Key points:
