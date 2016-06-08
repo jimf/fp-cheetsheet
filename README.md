@@ -10,6 +10,8 @@ This is an ongoing work in progress.
   - [`>>=`](#)
   - [`chain`](#chain)
   - [`concat`](#concat)
+  - [Endomorphism](#endomorphism)
+  - [`flatMap`](#flatmap)
   - [`mappend`](#mappend)
   - [`mbind`](#mbind)
 - [JavaScript FP References and Libraries](#javascript-fp-references-and-libraries)
@@ -44,6 +46,10 @@ const concat = (a, b) => a.concat(b);
 Append one value to another.
 
 Aliases: [`<>`](#), [`mappend`](#mappend)
+
+#### Endomorphism
+
+A function whose input and output are the same type.
 
 #### `flatMap`
 
