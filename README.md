@@ -5,7 +5,7 @@ Functional programming cheetsheet, oriented toward JavaScript.
 This is an ongoing work in progress.
 
 ## Table of Contents
-- [Method and Operator Glossary](#method-and-operator-glossary)
+- [Glossary](#glossary)
   - [`<>`](#)
   - [`>>=`](#)
   - [`chain`](#chain)
@@ -14,9 +14,10 @@ This is an ongoing work in progress.
   - [`flatMap`](#flatmap)
   - [`mappend`](#mappend)
   - [`mbind`](#mbind)
+  - [Natural Transformation](#natural-transformation)
 - [JavaScript FP References and Libraries](#javascript-fp-references-and-libraries)
 
-## Method and Operator Glossary
+## Glossary
 
 #### `<>`
 
@@ -62,6 +63,12 @@ Haskell append operation. See [`concat`](#concat).
 #### `mbind`
 
 See [`chain`](#chain).
+
+#### Natural Transformation
+
+A natural transformation takes a functor f to a functor g without modifying the
+values inside. For example, a `maybeToArray` might return a singleton array for
+a given `Just` value, and an empty array for a `Nothing`.
 
 ## JavaScript FP References and Libraries
 
