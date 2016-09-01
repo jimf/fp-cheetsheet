@@ -15,6 +15,7 @@ Futures.
  * [Construction](#construction)
  * [Operation Chaining](#operation-chaining)
  * [Parallel Execution](#parallel-execution)
+ * [Leveraging Natural Transformations](#leveraging-natural-transformations)
  * [Resources](#resources)
 
 ## Getting Started
@@ -192,6 +193,75 @@ Key points:
 - the function given to `R.lift` MUST:
   - be curried
   - have an arity equal to the number of actions being taken (in this case, 2)
+
+## Leveraging Natural Transformations
+
+When combining Futures with other monads like `Maybe`, `Either` and the like,
+it can be useful to leverage [natural transformations](README.md#natural-transformation)
+to immediately bail out from a Future sequence.
+
+For example, lets say we are fetching a result set, taking a piece out of the
+result (like an id), and then making a subsequent request. However, to
+abstract out the idea of failure, we've bottled up the extraction in an
+`Either`. In order to *not* make the second request, we could use a natural
+transformation to convert our `Either` directly into a `Future`, and if the
+`Either` is a `Left`, have the `Future` be rejected:
+
+```js
+const
+    R = require('ramda'),
+    Either = require('data.either'),
+    Future = require('data.task'),
+    request = require('request');
+
+const Left = Either.Left;
+const Right = Either.Right;
+
+// :: -> Future String (Array User)
+const getAllUsers = () => new Future((reject, resolve) => {
+    request({
+        url: 'http://jsonplaceholder.typicode.com/users',
+        json: true
+    }, (err, response, body) => (
+        err || response.statusCode !== 200
+            ? reject('Failed to fetch all users')
+            : resolve(body)
+    ))
+});
+
+// :: Int -> Future String (Array User)
+const getUser = id => new Future((reject, resolve) => {
+    request({
+        url: `http://jsonplaceholder.typicode.com/users/${id}`,
+        json: true
+    }, (err, response, body) => (
+        err || response.statusCode !== 200
+            ? reject(`Failed to fetch user ${id}`)
+            : resolve(body)
+    ))
+});
+
+// :: Array User -> Either String User
+const firstUser = users => users.length > 0 ? Right(users[0]) : Left('No users found.')
+
+// Natural transformation from Either to Future. If the Either is a Left, the Future
+// will be rejected. Otherwise it will be resolved.
+//
+// :: Either a b -> Future a b
+const eitherToFuture = either => either.cata({
+    Left: Future.rejected,
+    Right: Future.of
+});
+
+// Get all users
+// -> then pluck out the first user
+// -> then grab that user's id property
+// -> then fetch the record for that id
+getAllUsers()
+    .chain(R.compose(eitherToFuture, R.map(R.prop('id')), firstUser))
+    .chain(getUser)
+    .fork(console.warn, console.log);
+```
 
 ## Resources
 
